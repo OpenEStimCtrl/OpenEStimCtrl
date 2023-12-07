@@ -48,7 +48,11 @@ void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::setOnStrengthChange(
 void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::sendWave(DGLabESTIM01Channel channel,uint8_t x, uint16_t y, uint8_t z) {
     DGLabESTIM01EStimWaveData waveData = {0};
     waveData.payload.z = z;
+#if BYTE_ORDER == __ORDER_BIG_ENDIAN__
     waveData.payload.y = y;
+#else
+    waveData.payload.y = ntohs(y);
+#endif
     waveData.payload.x = x;
     switch (channel) {
         case CHANNEL_A:
@@ -62,8 +66,13 @@ void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::sendWave(DGLabESTIM01Channel cha
 
 void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::setStrength(uint16_t strengthA, uint16_t strengthB) {
     DGLabESTIM01EStimStrengthData strengthData = {0};
+#if BYTE_ORDER == __ORDER_BIG_ENDIAN__
     strengthData.payload.strengthA = strengthA;
     strengthData.payload.strengthB = strengthB;
+#else
+    strengthData.payload.strengthA = ntohs(strengthA);
+    strengthData.payload.strengthB = ntohs(strengthB);
+#endif
     _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicStrengthUUID, strengthData.data, sizeof(DGLabESTIM01EStimStrengthData));
 }
 
@@ -83,8 +92,13 @@ OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::parseBLEData(const char *service, con
         if (strcmp(characteristic, DGLabESTIM01CharacteristicStrengthUUID) > 0) {
             DGLabESTIM01EStimStrengthData strengthData = {0};
             memcpy(strengthData.data, data, length);
+#if BYTE_ORDER == __ORDER_BIG_ENDIAN__
             _strengthA = strengthData.payload.strengthA;
             _strengthB = strengthData.payload.strengthB;
+#else
+            _strengthA = ntohs(strengthData.payload.strengthA);
+            _strengthB = ntohs(strengthData.payload.strengthB);
+#endif
             if (_onChannelStrengthChange != nullptr) {
                 _onChannelStrengthChange(_strengthA, _strengthB);
             }
