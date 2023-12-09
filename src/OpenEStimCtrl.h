@@ -70,6 +70,6 @@ private:
 });
 #endif
 
-typedef void (*SendDataCallback)(const char* serviceUuid, const char* characteristicUuid, uint8_t* data, int length);
+typedef void (*SendDataCallback)(const char* serviceUuid, const char* characteristicUuid, uint8_t* data, int length, void* userData);
 
 #endif //OPENESTIMCTRL_OPENESTIMCTRL_H

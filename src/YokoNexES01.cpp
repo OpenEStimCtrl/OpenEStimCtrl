@@ -33,7 +33,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
             channelA.mode = dataReceive.packet.payload.channel.mode;
             channelA.connection = dataReceive.packet.payload.channel.connection;
             if (_onChannelAStatusChange != nullptr) {
-                _onChannelAStatusChange(channelA);
+                _onChannelAStatusChange(channelA, _userData);
             }
             break;
         }
@@ -44,7 +44,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
             channelB.mode = dataReceive.packet.payload.channel.mode;
             channelB.connection = dataReceive.packet.payload.channel.connection;
             if (_onChannelBStatusChange != nullptr) {
-                _onChannelBStatusChange(channelB);
+                _onChannelBStatusChange(channelB, _userData);
             }
             break;
         }
@@ -52,7 +52,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
         {
             motor = dataReceive.packet.payload.motor.mode;
             if (_onMotorStatusChange != nullptr) {
-                _onMotorStatusChange(motor);
+                _onMotorStatusChange(motor, _userData);
             }
             break;
         }
@@ -60,7 +60,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
         {
             battery = dataReceive.packet.payload.battery.level;
             if (_onBatteryStatusChange != nullptr) {
-                _onBatteryStatusChange(battery);
+                _onBatteryStatusChange(battery, _userData);
             }
             break;
         }
@@ -68,7 +68,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
         {
             step = (uint16_t)dataReceive.packet.payload.step.step;
             if (_onStepStatusChange != nullptr) {
-                _onStepStatusChange(step);
+                _onStepStatusChange(step, _userData);
             }
             break;
         }
@@ -81,7 +81,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
             accel.gyroY = dataReceive.packet.payload.angle.gyroY;
             accel.gyroZ = dataReceive.packet.payload.angle.gyroZ;
             if (_onAngleStatusChange != nullptr) {
-                _onAngleStatusChange(accel);
+                _onAngleStatusChange(accel, _userData);
             }
             break;
         }
@@ -89,7 +89,7 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01::YokoNexES01(SendDataCallback sendCallba
         {
             lastException = dataReceive.packet.payload.exception.code;
             if (_onException != nullptr) {
-                _onException(lastException);
+                _onException(lastException, _userData);
             }
             break;
         }
@@ -126,35 +126,35 @@ void OpenEStimCtrl::YokoNexES01::YokoNexES01::setEStim(OpenEStimCtrl::YokoNexES0
         dataChannel.pulseWidth = 0x00;
     }
     dataChannel.checksum = dataChannel.header + dataChannel.command + dataChannel.channel + dataChannel.enabled + (uint16_t)dataChannel.strength + dataChannel.mode + dataChannel.frequency + dataChannel.pulseWidth;
-    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataChannel, sizeof(dataChannel));
+    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataChannel, sizeof(dataChannel), _userData);
 }
 
 void OpenEStimCtrl::YokoNexES01::YokoNexES01::triggerMotor(OpenEStimCtrl::YokoNexES01::YokoNexES01Motor mode) {
     YokoNexES01DataMotor dataMotor;
     dataMotor.mode = mode;
     dataMotor.checksum = dataMotor.header + dataMotor.command + dataMotor.mode;
-    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataMotor, sizeof(dataMotor));
+    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataMotor, sizeof(dataMotor), _userData);
 }
 
 void OpenEStimCtrl::YokoNexES01::YokoNexES01::setStep(OpenEStimCtrl::YokoNexES01::YokoNexES01Step mode) {
     YokoNexES01DataStep dataStep;
     dataStep.mode = mode;
     dataStep.checksum = dataStep.header + dataStep.command + dataStep.mode;
-    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataStep, sizeof(dataStep));
+    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataStep, sizeof(dataStep), _userData);
 }
 
 void OpenEStimCtrl::YokoNexES01::YokoNexES01::setAngle(OpenEStimCtrl::YokoNexES01::YokoNexES01Angle mode) {
     YokoNexES01DataAngle dataAngle;
     dataAngle.mode = mode;
     dataAngle.checksum = dataAngle.header + dataAngle.command + dataAngle.mode;
-    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataAngle, sizeof(dataAngle));
+    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataAngle, sizeof(dataAngle), _userData);
 }
 
 void OpenEStimCtrl::YokoNexES01::YokoNexES01::query(OpenEStimCtrl::YokoNexES01::YokoNexES01Query query) {
     YokoNexES01DataQuery dataQuery;
     dataQuery.query = query;
     dataQuery.checksum = dataQuery.header + dataQuery.command + dataQuery.query;
-    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataQuery, sizeof(dataQuery));
+    _sendCallback(YokonexES01ServiceUUID, YokonexES01CharacteristicSendUUID, (uint8_t*)&dataQuery, sizeof(dataQuery), _userData);
 }
 
 uint8_t OpenEStimCtrl::YokoNexES01::YokoNexES01::getLastException() const {
@@ -211,6 +211,10 @@ void OpenEStimCtrl::YokoNexES01::YokoNexES01::setOnAngleStatusChange(OpenEStimCt
 
 void OpenEStimCtrl::YokoNexES01::YokoNexES01::setOnException(OpenEStimCtrl::YokoNexES01::onException callback) {
     _onException = callback;
+}
+
+void OpenEStimCtrl::YokoNexES01::YokoNexES01::setUserData(void *userData) {
+    _userData = userData;
 }
 
 void* YokoNexES01_new(SendDataCallback sendDataCallback) {
@@ -275,34 +279,38 @@ void YokoNexES01_setOnException(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::o
     ptr->setOnException(callback);
 }
 
-uint8_t YokoNexES01_getLastException(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01) {
+uint8_t YokoNexES01_getLastException(void* yokoNexES01) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    return yokoNexES01->getLastException();
+    return ptr->getLastException();
 }
-uint8_t YokoNexES01_getBattery(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01) {
+uint8_t YokoNexES01_getBattery(void* yokoNexES01) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    return yokoNexES01->getBattery();
+    return ptr->getBattery();
 }
-uint16_t YokoNexES01_getStep(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01) {
+uint16_t YokoNexES01_getStep(void* yokoNexES01) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    return yokoNexES01->getStep();
+    return ptr->getStep();
 }
-void YokoNexES01_getAccel(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Accel* accel) {
+void YokoNexES01_getAccel(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Accel* accel) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    OpenEStimCtrl::YokoNexES01::YokoNexES01Accel cAccel = yokoNexES01->getAccel();
+    OpenEStimCtrl::YokoNexES01::YokoNexES01Accel cAccel = ptr->getAccel();
     memcpy(accel, &cAccel, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01Accel));
 }
-void YokoNexES01_getChannelA(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
+void YokoNexES01_getChannelA(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = yokoNexES01->getChannelA();
+    OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = ptr->getChannelA();
     memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01ChannelStatus));
 }
-void YokoNexES01_getChannelB(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
+void YokoNexES01_getChannelB(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = yokoNexES01->getChannelB();
+    OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = ptr->getChannelB();
     memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01ChannelStatus));
 }
-OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(OpenEStimCtrl::YokoNexES01::YokoNexES01* yokoNexES01) {
+OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(void* yokoNexES01) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    return yokoNexES01->getMotor();
+    return ptr->getMotor();
+}
+void YokoNexES01_setUserData(void* yokoNexES01, void* userData) {
+    auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
+    ptr->setUserData(userData);
 }

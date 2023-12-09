@@ -87,12 +87,12 @@ namespace OpenEStimCtrl::YokoNexES01 {
             be_uint16_t gyroZ;
         });
 
-        typedef void (*onChannelStatusChange)(const YokoNexES01Status status);
-        typedef void (*onMotorStatusChange)(const YokoNexES01Motor status);
-        typedef void (*onBatteryStatusChange)(const uint8_t battery);
-        typedef void (*onStepStatusChange)(const uint16_t step);
-        typedef void (*onAngleStatusChange)(const YokoNexES01Accel accel);
-        typedef void (*onException)(const uint8_t code);
+        typedef void (*onChannelStatusChange)(const YokoNexES01Status status, void* userData);
+        typedef void (*onMotorStatusChange)(const YokoNexES01Motor status, void* userData);
+        typedef void (*onBatteryStatusChange)(const uint8_t battery, void* userData);
+        typedef void (*onStepStatusChange)(const uint16_t step, void* userData);
+        typedef void (*onAngleStatusChange)(const YokoNexES01Accel accel, void* userData);
+        typedef void (*onException)(const uint8_t code, void* userData);
 
         class YokoNexES01 {
         public:
@@ -106,6 +106,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
             [[maybe_unused]] void setStep(YokoNexES01Step mode);
             [[maybe_unused]] void setAngle(YokoNexES01Angle mode);
             [[maybe_unused]] void query(YokoNexES01Query query);
+            [[maybe_unused]] void setUserData(void* userData);
 
             [[maybe_unused]] void setOnChannelAStatusChange(onChannelStatusChange callback);
             [[maybe_unused]] void setOnChannelBStatusChange(onChannelStatusChange callback);
@@ -114,6 +115,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
             [[maybe_unused]] void setOnStepStatusChange(onStepStatusChange callback);
             [[maybe_unused]] void setOnAngleStatusChange(onAngleStatusChange callback);
             [[maybe_unused]] void setOnException(onException callback);
+
 
             [[maybe_unused]] [[nodiscard]] uint8_t getLastException() const;
             [[maybe_unused]] [[nodiscard]] uint8_t getBattery() const;
@@ -132,6 +134,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
             onStepStatusChange _onStepStatusChange = nullptr;
             onAngleStatusChange _onAngleStatusChange = nullptr;
             onException _onException = nullptr;
+            void* _userData = nullptr;
             YokoNexES01Status channelA {
                 YokoNexES01ChannelStatus::NOT_PLUG_IN,
                 false,
@@ -251,6 +254,7 @@ extern "C" void YokoNexES01_triggerMotor(void* yokoNexES01, OpenEStimCtrl::YokoN
 extern "C" void YokoNexES01_setStep(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Step mode);
 extern "C" void YokoNexES01_setAngle(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Angle mode);
 extern "C" void YokoNexES01_query(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Query query);
+extern "C" void YokoNexES01_setUserData(void* yokoNexES01, void* userData);
 
 extern "C" void YokoNexES01_setOnChannelAStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
 extern "C" void YokoNexES01_setOnChannelBStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);

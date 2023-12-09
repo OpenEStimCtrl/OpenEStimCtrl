@@ -1,6 +1,6 @@
 # OpenEStimCtrl - 开放的电刺激控制协议库
 
-![Version 0.0.1](https://img.shields.io/badge/Version-0.0.1-blue)
+![Version 0.0.2](https://img.shields.io/badge/Version-0.0.2-blue)
 
 ## 支持的设备
 - [x] DG-Lab ESTIM01 地牢实验室 郊狼1代
@@ -16,7 +16,7 @@
 
 ## 编译
 本库使用 CMake 进行编译，编译前请确保已安装以下依赖项：
-- CMake 3.25+
+- CMake 3.20+
 - C++17 编译器
 
 无额外依赖项，直接编译即可。

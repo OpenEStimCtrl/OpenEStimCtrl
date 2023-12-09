@@ -56,10 +56,10 @@ void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::sendWave(DGLabESTIM01Channel cha
     waveData.payload.x = x;
     switch (channel) {
         case CHANNEL_A:
-            _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicPWMAUUID, waveData.data, sizeof(DGLabESTIM01EStimStrengthData));
+            _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicPWMAUUID, waveData.data, sizeof(DGLabESTIM01EStimStrengthData), _userData);
             break;
         case CHANNEL_B:
-            _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicPWMBUUID, waveData.data, sizeof(DGLabESTIM01EStimStrengthData));
+            _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicPWMBUUID, waveData.data, sizeof(DGLabESTIM01EStimStrengthData), _userData);
             break;
     }
 }
@@ -73,7 +73,7 @@ void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::setStrength(uint16_t strengthA, 
     strengthData.payload.strengthA = ntohs(strengthA);
     strengthData.payload.strengthB = ntohs(strengthB);
 #endif
-    _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicStrengthUUID, strengthData.data, sizeof(DGLabESTIM01EStimStrengthData));
+    _sendDataCallback(DGLabESTIM01ServiceEStimUUID, DGLabESTIM01CharacteristicStrengthUUID, strengthData.data, sizeof(DGLabESTIM01EStimStrengthData), _userData);
 }
 
 void
@@ -85,7 +85,7 @@ OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::parseBLEData(const char *service, con
             memcpy(&battData, data, length);
             _battery = battData.level;
             if (_onBatteryChange != nullptr) {
-                _onBatteryChange(_battery);
+                _onBatteryChange(_battery, _userData);
             }
         }
     } else if (strcmp(service, DGLabESTIM01ServiceEStimUUID) > 0) {
@@ -100,7 +100,7 @@ OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::parseBLEData(const char *service, con
             _strengthB = ntohs(strengthData.payload.strengthB);
 #endif
             if (_onChannelStrengthChange != nullptr) {
-                _onChannelStrengthChange(_strengthA, _strengthB);
+                _onChannelStrengthChange(_strengthA, _strengthB, _userData);
             }
         }
     }
@@ -109,6 +109,10 @@ OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::parseBLEData(const char *service, con
 void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::sendWave(OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01Channel channel,
                                                          OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave wave) {
     sendWave(channel, wave.x, wave.y, wave.z);
+}
+
+void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::setUserData(void *userData) {
+    _userData = userData;
 }
 
 void* DGLabESTIM01_new(SendDataCallback sendDataCallback) {
@@ -155,4 +159,8 @@ uint16_t DGLabESTIM01_getStrengthA(void* dglab) {
 uint16_t DGLabESTIM01_getStrengthB(void* dglab) {
     auto ptr = static_cast<OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01*>(dglab);
     return ptr->getStrengthB();
+}
+void DGLabESTIM01_setUserData(void* dglab, void* userData) {
+    auto ptr = static_cast<OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01*>(dglab);
+    ptr->setUserData(userData);
 }

@@ -62,8 +62,8 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
     });
 
 
-    typedef void (*onChannelStrengthChange)(const uint16_t &strengthA, const uint16_t &strengthB);
-    typedef void (*onBatteryChange)(const uint8_t &level);
+    typedef void (*onChannelStrengthChange)(const uint16_t &strengthA, const uint16_t &strengthB, void* userData);
+    typedef void (*onBatteryChange)(const uint8_t &level, void* userData);
 
 
     class DGLabESTIM01 {
@@ -75,6 +75,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
         [[maybe_unused]] void setStrength(uint16_t strengthA, uint16_t strengthB);
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, uint8_t x, uint16_t y, uint8_t z);
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, DGLabESTIM01EStimWave wave);
+        [[maybe_unused]] void setUserData(void* userData);
 
         [[maybe_unused]] void setOnBatteryChange(onBatteryChange onBatteryChange);
         [[maybe_unused]] void setOnStrengthChange(onChannelStrengthChange onChannelStrengthChange);
@@ -91,6 +92,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
         uint8_t _battery = 0;
         uint16_t _strengthA = 0;
         uint16_t _strengthB = 0;
+        void* _userData = nullptr;
     };
 
 }
@@ -106,5 +108,6 @@ extern "C" void DGLabESTIM01_setOnStrengthChange(void* dglab, OpenEStimCtrl::DGL
 extern "C" uint8_t DGLabESTIM01_getBattery(void* dglab);
 extern "C" uint16_t DGLabESTIM01_getStrengthA(void* dglab);
 extern "C" uint16_t DGLabESTIM01_getStrengthB(void* dglab);
+extern "C" void DGLabESTIM01_setUserData(void* dglab, void* userData);
 
 #endif //OPENESTIMCTRL_DGLABESTIM01_H
