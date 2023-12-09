@@ -107,6 +107,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
             [[maybe_unused]] void setAngle(YokoNexES01Angle mode);
             [[maybe_unused]] void query(YokoNexES01Query query);
             [[maybe_unused]] void setUserData(void* userData);
+            [[maybe_unused]] void* getUserData();
 
             [[maybe_unused]] void setOnChannelAStatusChange(onChannelStatusChange callback);
             [[maybe_unused]] void setOnChannelBStatusChange(onChannelStatusChange callback);
@@ -255,6 +256,7 @@ extern "C" void YokoNexES01_setStep(void* yokoNexES01, OpenEStimCtrl::YokoNexES0
 extern "C" void YokoNexES01_setAngle(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Angle mode);
 extern "C" void YokoNexES01_query(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Query query);
 extern "C" void YokoNexES01_setUserData(void* yokoNexES01, void* userData);
+extern "C" void* YokoNexES01_getUserData(void* yokoNexES01);
 
 extern "C" void YokoNexES01_setOnChannelAStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
 extern "C" void YokoNexES01_setOnChannelBStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);

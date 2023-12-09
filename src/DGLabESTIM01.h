@@ -76,6 +76,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, uint8_t x, uint16_t y, uint8_t z);
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, DGLabESTIM01EStimWave wave);
         [[maybe_unused]] void setUserData(void* userData);
+        [[maybe_unused]] void* getUserData();
 
         [[maybe_unused]] void setOnBatteryChange(onBatteryChange onBatteryChange);
         [[maybe_unused]] void setOnStrengthChange(onChannelStrengthChange onChannelStrengthChange);
@@ -109,5 +110,6 @@ extern "C" uint8_t DGLabESTIM01_getBattery(void* dglab);
 extern "C" uint16_t DGLabESTIM01_getStrengthA(void* dglab);
 extern "C" uint16_t DGLabESTIM01_getStrengthB(void* dglab);
 extern "C" void DGLabESTIM01_setUserData(void* dglab, void* userData);
+extern "C" void* DGLabESTIM01_getUserData(void* dglab);
 
 #endif //OPENESTIMCTRL_DGLABESTIM01_H

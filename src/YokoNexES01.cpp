@@ -217,6 +217,10 @@ void OpenEStimCtrl::YokoNexES01::YokoNexES01::setUserData(void *userData) {
     _userData = userData;
 }
 
+void *OpenEStimCtrl::YokoNexES01::YokoNexES01::getUserData() {
+    return _userData;
+}
+
 void* YokoNexES01_new(SendDataCallback sendDataCallback) {
     return new OpenEStimCtrl::YokoNexES01::YokoNexES01(sendDataCallback);
 }
@@ -313,4 +317,8 @@ OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(void* yokoNexE
 void YokoNexES01_setUserData(void* yokoNexES01, void* userData) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
     ptr->setUserData(userData);
+}
+void* YokoNexES01_getUserData(void* yokoNexES01) {
+    auto *ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
+    return ptr->getUserData();
 }

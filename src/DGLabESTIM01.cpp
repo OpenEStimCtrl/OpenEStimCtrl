@@ -115,6 +115,10 @@ void OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::setUserData(void *userData) {
     _userData = userData;
 }
 
+void *OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01::getUserData() {
+    return _userData;
+}
+
 void* DGLabESTIM01_new(SendDataCallback sendDataCallback) {
     return new OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01(sendDataCallback);
 }
@@ -163,4 +167,8 @@ uint16_t DGLabESTIM01_getStrengthB(void* dglab) {
 void DGLabESTIM01_setUserData(void* dglab, void* userData) {
     auto ptr = static_cast<OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01*>(dglab);
     ptr->setUserData(userData);
+}
+void* DGLabESTIM01_getUserData(void* dglab) {
+    auto ptr = static_cast<OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01*>(dglab);
+    return ptr->getUserData();
 }
