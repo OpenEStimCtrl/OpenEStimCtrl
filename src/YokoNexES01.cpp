@@ -303,12 +303,12 @@ void YokoNexES01_getAccel(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNex
 void YokoNexES01_getChannelA(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
     OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = ptr->getChannelA();
-    memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01ChannelStatus));
+    memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01Status));
 }
 void YokoNexES01_getChannelB(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
     OpenEStimCtrl::YokoNexES01::YokoNexES01Status cStatus = ptr->getChannelB();
-    memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01ChannelStatus));
+    memcpy(status, &cStatus, sizeof(OpenEStimCtrl::YokoNexES01::YokoNexES01Status));
 }
 OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(void* yokoNexES01) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
