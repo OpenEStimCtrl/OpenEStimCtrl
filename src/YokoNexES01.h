@@ -61,7 +61,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
         };
 
         enum YokoNexES01Angle: uint8_t {
-            ANGLE_OFF = 0x01, ANGLE_ON = 0x01
+            ANGLE_OFF = 0x00, ANGLE_ON = 0x01
         };
 
         enum YokoNexES01Query: uint8_t {
