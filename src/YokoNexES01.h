@@ -94,7 +94,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
         typedef void (*onAngleStatusChange)(const YokoNexES01Accel accel, void* userData);
         typedef void (*onException)(const uint8_t code, void* userData);
 
-        class YokoNexES01 {
+        class LIBRARY_API YokoNexES01 {
         public:
             [[maybe_unused]] explicit YokoNexES01(SendDataCallback sendCallback);
             virtual ~YokoNexES01() = default;
@@ -246,33 +246,33 @@ namespace OpenEStimCtrl::YokoNexES01 {
 }
 
 
-extern "C" void* YokoNexES01_new(SendDataCallback sendDataCallback);
-extern "C" void YokoNexES01_delete(void* yokoNexES01);
+extern "C" LIBRARY_API void* YokoNexES01_new(SendDataCallback sendDataCallback);
+extern "C" LIBRARY_API void YokoNexES01_delete(void* yokoNexES01);
 
-extern "C" void YokoNexES01_parseBLEData(void* yokoNexES01, const char* data, int length);
-extern "C" void YokoNexES01_setEStim(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Channel channel, bool enabled, uint16_t strength, OpenEStimCtrl::YokoNexES01::YokoNexES01Mode mode, uint8_t frequency, uint8_t pulseWidth);
-extern "C" void YokoNexES01_triggerMotor(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Motor mode);
-extern "C" void YokoNexES01_setStep(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Step mode);
-extern "C" void YokoNexES01_setAngle(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Angle mode);
-extern "C" void YokoNexES01_query(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Query query);
-extern "C" void YokoNexES01_setUserData(void* yokoNexES01, void* userData);
-extern "C" void* YokoNexES01_getUserData(void* yokoNexES01);
+extern "C" LIBRARY_API void YokoNexES01_parseBLEData(void* yokoNexES01, const char* data, int length);
+extern "C" LIBRARY_API void YokoNexES01_setEStim(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Channel channel, bool enabled, uint16_t strength, OpenEStimCtrl::YokoNexES01::YokoNexES01Mode mode, uint8_t frequency, uint8_t pulseWidth);
+extern "C" LIBRARY_API void YokoNexES01_triggerMotor(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Motor mode);
+extern "C" LIBRARY_API void YokoNexES01_setStep(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Step mode);
+extern "C" LIBRARY_API void YokoNexES01_setAngle(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Angle mode);
+extern "C" LIBRARY_API void YokoNexES01_query(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Query query);
+extern "C" LIBRARY_API void YokoNexES01_setUserData(void* yokoNexES01, void* userData);
+extern "C" LIBRARY_API void* YokoNexES01_getUserData(void* yokoNexES01);
 
-extern "C" void YokoNexES01_setOnChannelAStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
-extern "C" void YokoNexES01_setOnChannelBStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
-extern "C" void YokoNexES01_setOnMotorStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onMotorStatusChange callback);
-extern "C" void YokoNexES01_setOnBatteryStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onBatteryStatusChange callback);
-extern "C" void YokoNexES01_setOnStepStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onStepStatusChange callback);
-extern "C" void YokoNexES01_setOnAngleStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onAngleStatusChange callback);
-extern "C" void YokoNexES01_setOnException(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onException callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnChannelAStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnChannelBStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onChannelStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnMotorStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onMotorStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnBatteryStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onBatteryStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnStepStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onStepStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnAngleStatusChange(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onAngleStatusChange callback);
+extern "C" LIBRARY_API void YokoNexES01_setOnException(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::onException callback);
 
-extern "C" uint8_t YokoNexES01_getLastException(void* yokoNexES01);
-extern "C" uint8_t YokoNexES01_getBattery(void* yokoNexES01);
-extern "C" uint16_t YokoNexES01_getStep(void* yokoNexES01);
-extern "C" void YokoNexES01_getAccel(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Accel* accel);
-extern "C" void YokoNexES01_getChannelA(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status);
-extern "C" void YokoNexES01_getChannelB(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status);
-extern "C" OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(void* yokoNexES01);
+extern "C" LIBRARY_API uint8_t YokoNexES01_getLastException(void* yokoNexES01);
+extern "C" LIBRARY_API uint8_t YokoNexES01_getBattery(void* yokoNexES01);
+extern "C" LIBRARY_API uint16_t YokoNexES01_getStep(void* yokoNexES01);
+extern "C" LIBRARY_API void YokoNexES01_getAccel(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Accel* accel);
+extern "C" LIBRARY_API void YokoNexES01_getChannelA(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status);
+extern "C" LIBRARY_API void YokoNexES01_getChannelB(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Status* status);
+extern "C" LIBRARY_API OpenEStimCtrl::YokoNexES01::YokoNexES01Motor YokoNexES01_getMotor(void* yokoNexES01);
 
 
 #endif //OPENESTIMCTRL_YOKONEXES01_H

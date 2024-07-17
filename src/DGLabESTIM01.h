@@ -66,7 +66,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
     typedef void (*onBatteryChange)(const uint8_t &level, void* userData);
 
 
-    class DGLabESTIM01 {
+    class LIBRARY_API DGLabESTIM01 {
     public:
         [[maybe_unused]] explicit DGLabESTIM01(SendDataCallback sendDataCallback);
         virtual ~DGLabESTIM01() = default;
@@ -76,7 +76,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, uint8_t x, uint16_t y, uint8_t z);
         [[maybe_unused]] void sendWave(DGLabESTIM01Channel channel, DGLabESTIM01EStimWave wave);
         [[maybe_unused]] void setUserData(void* userData);
-        [[maybe_unused]] void* getUserData();
+        [[maybe_unused]] void *getUserData();
 
         [[maybe_unused]] void setOnBatteryChange(onBatteryChange onBatteryChange);
         [[maybe_unused]] void setOnStrengthChange(onChannelStrengthChange onChannelStrengthChange);
@@ -98,18 +98,18 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
 
 }
 
-extern "C" void* DGLabESTIM01_new(SendDataCallback sendDataCallback);
-extern "C" void DGLabESTIM01_delete(void* dglab);
-extern "C" void DGLabESTIM01_parseBLEData(void* dglab, const char* service, const char* characteristic, const uint8_t *data, int length);
-extern "C" void DGLabESTIM01_setStrength(void* dglab, uint16_t strengthA, uint16_t strengthB);
-extern "C" void DGLabESTIM01_sendWave(void* dglab, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01Channel channel, uint8_t x, uint8_t y, uint8_t z);
-extern "C" void DGLabESTIM01_sendWaveStruct(void* dglab, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01Channel channel, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave wave);
-extern "C" void DGLabESTIM01_setOnBatteryChange(void* dglab, OpenEStimCtrl::DGLabESTIM01::onBatteryChange onBatteryChange);
-extern "C" void DGLabESTIM01_setOnStrengthChange(void* dglab, OpenEStimCtrl::DGLabESTIM01::onChannelStrengthChange onChannelStrengthChange);
-extern "C" uint8_t DGLabESTIM01_getBattery(void* dglab);
-extern "C" uint16_t DGLabESTIM01_getStrengthA(void* dglab);
-extern "C" uint16_t DGLabESTIM01_getStrengthB(void* dglab);
-extern "C" void DGLabESTIM01_setUserData(void* dglab, void* userData);
-extern "C" void* DGLabESTIM01_getUserData(void* dglab);
+extern "C" LIBRARY_API void* DGLabESTIM01_new(SendDataCallback sendDataCallback);
+extern "C" LIBRARY_API void DGLabESTIM01_delete(void* dglab);
+extern "C" LIBRARY_API void DGLabESTIM01_parseBLEData(void* dglab, const char* service, const char* characteristic, const uint8_t *data, int length);
+extern "C" LIBRARY_API void DGLabESTIM01_setStrength(void* dglab, uint16_t strengthA, uint16_t strengthB);
+extern "C" LIBRARY_API void DGLabESTIM01_sendWave(void* dglab, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01Channel channel, uint8_t x, uint8_t y, uint8_t z);
+extern "C" LIBRARY_API void DGLabESTIM01_sendWaveStruct(void* dglab, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01Channel channel, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave wave);
+extern "C" LIBRARY_API void DGLabESTIM01_setOnBatteryChange(void* dglab, OpenEStimCtrl::DGLabESTIM01::onBatteryChange onBatteryChange);
+extern "C" LIBRARY_API void DGLabESTIM01_setOnStrengthChange(void* dglab, OpenEStimCtrl::DGLabESTIM01::onChannelStrengthChange onChannelStrengthChange);
+extern "C" LIBRARY_API uint8_t DGLabESTIM01_getBattery(void* dglab);
+extern "C" LIBRARY_API uint16_t DGLabESTIM01_getStrengthA(void* dglab);
+extern "C" LIBRARY_API uint16_t DGLabESTIM01_getStrengthB(void* dglab);
+extern "C" LIBRARY_API void DGLabESTIM01_setUserData(void* dglab, void* userData);
+extern "C" LIBRARY_API void* DGLabESTIM01_getUserData(void* dglab);
 
 #endif //OPENESTIMCTRL_DGLABESTIM01_H

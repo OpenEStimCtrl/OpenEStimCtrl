@@ -23,6 +23,12 @@ You should have received a copy of the GNU Affero General Public License
 #include <cstdint>
 #include <cstring>
 
+#ifdef _MSC_VER
+#define LIBRARY_API __declspec(dllexport)
+#else
+#define LIBRARY_API
+#endif
+
 #ifdef __GNUC__
 #define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
 #endif
