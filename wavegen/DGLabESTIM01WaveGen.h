@@ -42,9 +42,9 @@ namespace OpenEStimCtrl {
 
 } // OpenEStimCtrl
 
-extern "C" void DGLabESTIM01WaveGen_calcXYZByFrequency(double frequency, int z, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
-extern "C" void DGLabESTIM01WaveGen_calcTouchWaveByPosition(double x, double y, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
-extern "C" void DGLabESTIM01WaveGen_calcTouchWaveByTimeSpan(int timeSpan, OpenEStimCtrl::DGLabESTIM01WaveGen::DGLabESTIM01EStimTouchWave* touchWave, size_t length, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
-extern "C" void DGLabESTIM01WaveGen_calcAutoWave(OpenEStimCtrl::DGLabESTIM01WaveGen::DGLabESTIM01EStimAutoWaveState* state, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
+extern "C" void LIBRARY_API DGLabESTIM01WaveGen_calcXYZByFrequency(double frequency, int z, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
+extern "C" void LIBRARY_API DGLabESTIM01WaveGen_calcTouchWaveByPosition(double x, double y, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
+extern "C" void LIBRARY_API DGLabESTIM01WaveGen_calcTouchWaveByTimeSpan(int timeSpan, OpenEStimCtrl::DGLabESTIM01WaveGen::DGLabESTIM01EStimTouchWave* touchWave, size_t length, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
+extern "C" void LIBRARY_API DGLabESTIM01WaveGen_calcAutoWave(OpenEStimCtrl::DGLabESTIM01WaveGen::DGLabESTIM01EStimAutoWaveState* state, OpenEStimCtrl::DGLabESTIM01::DGLabESTIM01EStimWave* wave);
 
 #endif //OPENESTIMCTRLSTATIC_DGLABESTIM01WAVEGEN_H
