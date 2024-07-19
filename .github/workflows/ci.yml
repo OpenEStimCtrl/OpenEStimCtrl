@@ -1,0 +1,44 @@
+name: Build And Release with CMake
+run-name: Auto Release for TAG ${{ github.ref_name }}
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    strategy:
+        matrix:
+            os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set Up MS Build
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1
+      - name: Set up CMake
+        uses: actions/setup-cmake@v1
+        with:
+          cmake-version: '3.21.3'
+      - name: Build Release
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release
+      - name: Make dist folder
+        run: |
+          mkdir dist
+          cp build/Release/* dist/
+          cp build/library_static/* dist/
+          mkdir releases
+      - name: Zipped dist folder (Windows)
+        if: matrix.os == 'windows-latest'
+        run: Compress-Archive -Path dist/* -Destination releases/OpenEStimCtrl-${{ runner.os }}-$env:GITHUB_REF_NAME.zip
+      - name: Tar and Gzip dist folder (Linux and MacOS)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+        run: tar -czvf releases/OpenEStimCtrl-${{ runner.os }}-$GITHUB_REF_NAME.tar.gz dist/*
+      - name: Upload Release Asset
+        uses: ncipollo/release-action@v1
+        if: ${{ success() }}
+        with:
+          allowUpdates: true
+          artifacts: 'releases/*'
+          makeLatest: true
