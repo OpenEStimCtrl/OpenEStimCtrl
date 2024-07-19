@@ -22,7 +22,7 @@ jobs:
         with:
           run-build: true
           options: |
-            BUILD_TYPE=Release
+            CMAKE_BUILD_TYPE=Release
       - name: Make dist folder
         run: |
           mkdir dist
