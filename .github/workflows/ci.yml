@@ -25,6 +25,7 @@ jobs:
             CMAKE_BUILD_TYPE=Release
       - name: Make dist folder
         run: |
+          ls build/
           mkdir dist
           cp build/Release/* dist/
           cp build/library_static/* dist/
