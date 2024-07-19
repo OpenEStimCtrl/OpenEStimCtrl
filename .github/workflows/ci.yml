@@ -19,12 +19,15 @@ jobs:
       - name: Set Up MS Build
         if: matrix.os == 'windows-latest'
         uses: microsoft/setup-msbuild@v2
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@v4
       - name: Set up CMake
         uses: threeal/cmake-action@main
         with:
           run-build: true
           options: |
             CMAKE_BUILD_TYPE=Release
+          generator: Ninja
       - name: Make dist folder (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
