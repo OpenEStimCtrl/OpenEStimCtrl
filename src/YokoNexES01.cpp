@@ -229,9 +229,9 @@ void YokoNexES01_delete(void* yokoNexES01) {
     delete ptr;
 }
 
-void YokoNexES01_parseBLEData(void* yokoNexES01, uint8_t* data, int length) {
+void YokoNexES01_parseBLEData(void* yokoNexES01, const uint8_t* data, int length) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);
-    ptr->parseBLEData(data, length);
+    ptr->parseBLEData(const_cast<uint8_t *>(data), length);
 }
 void YokoNexES01_setEStim(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Channel channel, bool enabled, uint16_t strength, OpenEStimCtrl::YokoNexES01::YokoNexES01Mode mode, uint8_t frequency, uint8_t pulseWidth) {
     auto* ptr = static_cast<OpenEStimCtrl::YokoNexES01::YokoNexES01 *>(yokoNexES01);

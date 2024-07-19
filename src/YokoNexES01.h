@@ -94,7 +94,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
         typedef void (*onAngleStatusChange)(const YokoNexES01Accel accel, void* userData);
         typedef void (*onException)(const uint8_t code, void* userData);
 
-        class LIBRARY_API YokoNexES01 {
+        class YokoNexES01 {
         public:
             [[maybe_unused]] explicit YokoNexES01(SendDataCallback sendCallback);
             virtual ~YokoNexES01() = default;
@@ -249,7 +249,7 @@ namespace OpenEStimCtrl::YokoNexES01 {
 extern "C" LIBRARY_API void* YokoNexES01_new(SendDataCallback sendDataCallback);
 extern "C" LIBRARY_API void YokoNexES01_delete(void* yokoNexES01);
 
-extern "C" LIBRARY_API void YokoNexES01_parseBLEData(void* yokoNexES01, const char* data, int length);
+extern "C" LIBRARY_API void YokoNexES01_parseBLEData(void* yokoNexES01, const uint8_t* data, int length);
 extern "C" LIBRARY_API void YokoNexES01_setEStim(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Channel channel, bool enabled, uint16_t strength, OpenEStimCtrl::YokoNexES01::YokoNexES01Mode mode, uint8_t frequency, uint8_t pulseWidth);
 extern "C" LIBRARY_API void YokoNexES01_triggerMotor(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Motor mode);
 extern "C" LIBRARY_API void YokoNexES01_setStep(void* yokoNexES01, OpenEStimCtrl::YokoNexES01::YokoNexES01Step mode);

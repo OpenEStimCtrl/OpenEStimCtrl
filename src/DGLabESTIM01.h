@@ -66,7 +66,7 @@ namespace OpenEStimCtrl::DGLabESTIM01 {
     typedef void (*onBatteryChange)(const uint8_t &level, void* userData);
 
 
-    class LIBRARY_API DGLabESTIM01 {
+    class DGLabESTIM01 {
     public:
         [[maybe_unused]] explicit DGLabESTIM01(SendDataCallback sendDataCallback);
         virtual ~DGLabESTIM01() = default;
