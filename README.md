@@ -1,6 +1,6 @@
 # OpenEStimCtrl - 开放的电刺激控制协议库
 
-![Version 0.0.2](https://img.shields.io/badge/Version-0.0.2-blue)
+![Version 0.1.3](https://img.shields.io/badge/Version-0.1.3-blue)
 
 ## 支持的设备
 - [x] DG-Lab ESTIM01 地牢实验室 郊狼1代
