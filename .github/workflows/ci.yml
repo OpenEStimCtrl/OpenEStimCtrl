@@ -21,7 +21,8 @@ jobs:
         uses: threeal/cmake-action@main
         with:
           run-build: true
-          build-args: -DCMAKE_BUILD_TYPE=Release
+          options: |
+            BUILD_TYPE=Release
       - name: Make dist folder
         run: |
           mkdir dist
