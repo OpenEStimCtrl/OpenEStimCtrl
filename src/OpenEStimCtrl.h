@@ -55,6 +55,7 @@ private:
 });
 #else
 #ifdef _WIN32
+#pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 #else
 #include <arpa/inet.h>
