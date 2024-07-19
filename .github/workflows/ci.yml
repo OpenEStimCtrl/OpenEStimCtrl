@@ -23,9 +23,17 @@ jobs:
           run-build: true
           options: |
             CMAKE_BUILD_TYPE=Release
-      - name: Make dist folder
+      - name: Make dist folder (Linux)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
         run: |
-          ls build/
+          mkdir -p dist/dynamic/
+          mkdir -p dist/static/
+          cp build/libOpenEStimCtrl.so dist/dynamic/
+          cp build/library_static/* dist/static/
+          mkdir releases
+      - name: Make dist folder (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
           mkdir dist
           cp build/Release/* dist/
           cp build/library_static/* dist/
