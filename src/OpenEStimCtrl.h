@@ -54,7 +54,7 @@ private:
     uint16_t be_val_;
 });
 #else
-#ifdef _WINDOWS
+#ifdef _WIN32
 #include <WinSock2.h>
 #else
 #include <arpa/inet.h>
